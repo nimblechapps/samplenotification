@@ -71,6 +71,16 @@ app.post('/read-all-notifications', async (req, res) => {
   }
 });
 
+// Endpoint to get all notifications
+app.get('/get-all-notifications', async (req, res) => {
+  try {
+    const notifications = await Notification.find({deviceToken:req.body.deviceToken});
+    res.status(200).send({ success: true, notifications });
+  } catch (error) {
+    res.status(500).send({ success: false, error: error.message });
+  }
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
