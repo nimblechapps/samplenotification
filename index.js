@@ -35,12 +35,29 @@ app.post('/send-notification', async (req, res) => {
   try {
     const response = await admin.messaging().send(message);
 
-    const notification = new Notification({ title, content: body });
+    const notification = new Notification({ title, content: body, deviceToken: token });
     await notification.save();
 
     res.status(200).send({ success: true, response });
   } catch (error) {
     res.status(400).send({ success: false, error: error.message });
+  }
+});
+
+// Endpoint to mark a single notification as read
+app.post('/read-notification', async (req, res) => {
+  try {
+    const notification = await Notification.findByIdAndUpdate(
+      req.body.id,
+      { isRead: true },
+      { new: true }
+    );
+    if (!notification) {
+      return res.status(404).send({ success: false, message: 'Notification not found' });
+    }
+    res.status(200).send({ success: true, notification });
+  } catch (error) {
+    res.status(500).send({ success: false, error: error.message });
   }
 });
 

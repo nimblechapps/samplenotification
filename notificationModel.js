@@ -10,7 +10,10 @@ const notificationSchema = new mongoose.Schema({
     isRead: {
         type: Boolean,
         default: false
-    }
+    },
+    deviceToken: {
+        type: String,
+    },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Notification', notificationSchema);
