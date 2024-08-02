@@ -5,11 +5,15 @@ const serviceAccount = require('./notificationapp-b7fa0-firebase-adminsdk-7fujs-
 const Notification = require('./notificationModel');
 const mongoose = require('mongoose');
 
+require('dotenv').config();
+
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
 
-mongoose.connect('mongodb+srv://developer:ef1cP4Axy5HMXRbA@samplenotificationapp.2s8qmiq.mongodb.net/?retryWrites=true&w=majority&appName=samplenotificationapp', {
+const mongoUri = process.env.MONGODB_URI;
+
+mongoose.connect(mongoUri, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   }).then(() => {
