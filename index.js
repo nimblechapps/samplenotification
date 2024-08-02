@@ -62,9 +62,9 @@ app.post('/read-notification', async (req, res) => {
 });
 
 // Endpoint to mark all notifications as read
-app.put('/read-all-notifications', async (req, res) => {
+app.post('/read-all-notifications', async (req, res) => {
   try {
-    await Notification.updateMany({}, { isRead: true });
+    await Notification.updateMany({deviceToken:req.body.deviceToken}, { isRead: true });
     res.status(200).send({ success: true, message: 'All notifications marked as read' });
   } catch (error) {
     res.status(500).send({ success: false, error: error.message });
