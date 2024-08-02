@@ -26,7 +26,7 @@ const app = express();
 app.use(bodyParser.json());
 
 app.post('/send-notification', async (req, res) => {
-  const { token, title, body } = req.body;
+  const { token, title, body, deviceType } = req.body;
 
   const message = {
     notification: {
@@ -39,7 +39,7 @@ app.post('/send-notification', async (req, res) => {
   try {
     const response = await admin.messaging().send(message);
 
-    const notification = new Notification({ title, content: body, deviceToken: token });
+    const notification = new Notification({ title, content: body, deviceToken: token, deviceType });
     await notification.save();
 
     res.status(200).send({ success: true, response });

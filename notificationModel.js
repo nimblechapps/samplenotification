@@ -14,6 +14,9 @@ const notificationSchema = new mongoose.Schema({
     deviceToken: {
         type: String,
     },
+    deviceType: {
+        type: String,
+    },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Notification', notificationSchema);
