@@ -78,7 +78,7 @@ app.post('/read-all-notifications', async (req, res) => {
 // Endpoint to get all notifications
 app.post('/get-all-notifications', async (req, res) => {
   try {
-    const notifications = await Notification.find({deviceToken:req.body.deviceToken});
+    const notifications = await Notification.find({ deviceToken: req.body.deviceToken }).sort({ createdAt: -1 });
     res.status(200).send({ success: true, notifications });
   } catch (error) {
     res.status(500).send({ success: false, error: error.message });
